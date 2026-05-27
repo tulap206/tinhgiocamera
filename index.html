@@ -506,7 +506,7 @@ footer{
       <!-- Convert Cam -> Real -->
       <div class="conv-card">
         <div class="conv-title">Nhập giờ Camera hiển thị</div>
-        <div class="dt-row">
+        <div class="dt-row" id="conv-card-cam-row">
           <input type="text" class="dt w-d" maxlength="2" placeholder="DD" id="conv-cam-d" pattern="[0-9]*" inputmode="numeric"/>
           <span class="dt-sep">/</span>
           <input type="text" class="dt w-m" maxlength="2" placeholder="MM" id="conv-cam-m" pattern="[0-9]*" inputmode="numeric"/>
@@ -529,7 +529,7 @@ footer{
       <!-- Convert Real -> Cam -->
       <div class="conv-card">
         <div class="conv-title">Nhập giờ Thực tế xảy ra</div>
-        <div class="dt-row">
+        <div class="dt-row" id="conv-card-real-row">
           <input type="text" class="dt w-d" maxlength="2" placeholder="DD" id="conv-real-d" pattern="[0-9]*" inputmode="numeric"/>
           <span class="dt-sep">/</span>
           <input type="text" class="dt w-m" maxlength="2" placeholder="MM" id="conv-real-m" pattern="[0-9]*" inputmode="numeric"/>
@@ -895,9 +895,7 @@ function triggerConvert() {
   convertCamToReal();
   convertRealToCam();
 }
-// Add wrapper divs IDs for focus function
-elConvCamD.parentNode.id = 'conv-card-cam-row';
-elConvRealD.parentNode.id = 'conv-card-real-row';
+
 
 // Copy functions
 function setupCopyToClipboard(btnEl, textEl) {
