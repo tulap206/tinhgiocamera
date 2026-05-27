@@ -148,11 +148,12 @@ input.name-input:focus{
 
 /* DateTime row */
 .dt-row{
-  display:flex;align-items:center;gap:6px;
+  display:flex;align-items:center;justify-content:center;
+  gap:6px;
   flex-wrap:nowrap;
 }
 .dt-sep{color:var(--text3);font-size:14px;font-weight:300;user-select:none}
-.dt-spacer{width:12px;flex-shrink:0}
+.dt-spacer{width:10px;flex-shrink:0}
 
 @media(max-width: 480px){
   .page {
@@ -164,7 +165,7 @@ input.name-input:focus{
   }
   .dt-row {
     flex-wrap: nowrap;
-    justify-content: space-between;
+    justify-content: center;
     gap: 2px;
   }
   .dt-spacer {
