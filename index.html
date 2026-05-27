@@ -303,8 +303,20 @@ input.dt.w-t{width:38px}
   display:grid;
   grid-template-columns:1fr;
   gap:16px;
-  margin-top:10px;
 }
+.config-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+@media(max-width: 580px) {
+  .config-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
 
 .conv-card{
   background:var(--surface2);
@@ -434,34 +446,36 @@ footer{
       <input type="text" class="name-input" placeholder="Ví dụ: Camera cổng chính, Cam 02..." id="cam-name-input"/>
     </div>
 
-    <div class="field">
-      <div class="field-label">
-        <span class="field-label-text">Thời gian thực tế (Chuẩn) <span class="badge">REAL</span></span>
-        <span class="field-action" id="btn-fill-real-now">Lấy giờ hiện tại</span>
+    <div class="config-grid">
+      <div class="field">
+        <div class="field-label">
+          <span class="field-label-text">Thời gian thực tế (Chuẩn) <span class="badge">REAL</span></span>
+          <span class="field-action" id="btn-fill-real-now">Lấy giờ hiện tại</span>
+        </div>
+        <div class="dt-row" id="real-time-row">
+          <input type="text" class="dt w-date" maxlength="10" placeholder="DD/MM/YYYY" id="real-date" pattern="[0-9/]*" inputmode="numeric"/>
+          <div class="dt-spacer"></div>
+          <input type="text" class="dt w-t" maxlength="2" placeholder="hh" id="real-h" pattern="[0-9]*" inputmode="numeric"/>
+          <span class="dt-sep">:</span>
+          <input type="text" class="dt w-t" maxlength="2" placeholder="mm" id="real-i" pattern="[0-9]*" inputmode="numeric"/>
+          <span class="dt-sep">:</span>
+          <input type="text" class="dt w-t" maxlength="2" placeholder="ss" id="real-s" pattern="[0-9]*" inputmode="numeric"/>
+        </div>
       </div>
-      <div class="dt-row" id="real-time-row">
-        <input type="text" class="dt w-date" maxlength="10" placeholder="DD/MM/YYYY" id="real-date" pattern="[0-9/]*" inputmode="numeric"/>
-        <div class="dt-spacer"></div>
-        <input type="text" class="dt w-t" maxlength="2" placeholder="hh" id="real-h" pattern="[0-9]*" inputmode="numeric"/>
-        <span class="dt-sep">:</span>
-        <input type="text" class="dt w-t" maxlength="2" placeholder="mm" id="real-i" pattern="[0-9]*" inputmode="numeric"/>
-        <span class="dt-sep">:</span>
-        <input type="text" class="dt w-t" maxlength="2" placeholder="ss" id="real-s" pattern="[0-9]*" inputmode="numeric"/>
-      </div>
-    </div>
 
-    <div class="field">
-      <div class="field-label">
-        <span class="field-label-text">Thời gian hiển thị trên Camera <span class="badge" style="color:var(--red)">CAMERA</span></span>
-      </div>
-      <div class="dt-row" id="cam-time-row">
-        <input type="text" class="dt w-date" maxlength="10" placeholder="DD/MM/YYYY" id="cam-date" pattern="[0-9/]*" inputmode="numeric"/>
-        <div class="dt-spacer"></div>
-        <input type="text" class="dt w-t" maxlength="2" placeholder="hh" id="cam-h" pattern="[0-9]*" inputmode="numeric"/>
-        <span class="dt-sep">:</span>
-        <input type="text" class="dt w-t" maxlength="2" placeholder="mm" id="cam-i" pattern="[0-9]*" inputmode="numeric"/>
-        <span class="dt-sep">:</span>
-        <input type="text" class="dt w-t" maxlength="2" placeholder="ss" id="cam-s" pattern="[0-9]*" inputmode="numeric"/>
+      <div class="field">
+        <div class="field-label">
+          <span class="field-label-text">Thời gian hiển thị trên Camera <span class="badge" style="color:var(--red)">CAMERA</span></span>
+        </div>
+        <div class="dt-row" id="cam-time-row">
+          <input type="text" class="dt w-date" maxlength="10" placeholder="DD/MM/YYYY" id="cam-date" pattern="[0-9/]*" inputmode="numeric"/>
+          <div class="dt-spacer"></div>
+          <input type="text" class="dt w-t" maxlength="2" placeholder="hh" id="cam-h" pattern="[0-9]*" inputmode="numeric"/>
+          <span class="dt-sep">:</span>
+          <input type="text" class="dt w-t" maxlength="2" placeholder="mm" id="cam-i" pattern="[0-9]*" inputmode="numeric"/>
+          <span class="dt-sep">:</span>
+          <input type="text" class="dt w-t" maxlength="2" placeholder="ss" id="cam-s" pattern="[0-9]*" inputmode="numeric"/>
+        </div>
       </div>
     </div>
 
@@ -479,11 +493,6 @@ footer{
       <div class="result-box-label">Độ lệch thời gian (Giờ : Phút : Giây)</div>
       <div class="result-box-value" id="result-offset">00:00:00</div>
     </div>
-
-    <div class="btn-row">
-      <button class="btn btn-primary" id="btn-save-log">Lưu nhật ký</button>
-      <button class="btn btn-ghost" id="btn-reset-inputs">Đặt lại</button>
-    </div>
   </div>
 
   <!-- Card 2: Quy đổi thời gian -->
@@ -491,25 +500,6 @@ footer{
     <div class="card-title">Quy đổi thời gian (Thời gian thực)</div>
     
     <div class="converter-grid">
-      <!-- Convert Cam -> Real -->
-      <div class="conv-card">
-        <div class="conv-title">Nhập giờ Camera hiển thị</div>
-        <div class="dt-row" id="conv-card-cam-row">
-          <input type="text" class="dt w-date" maxlength="10" placeholder="DD/MM/YYYY" id="conv-cam-date" pattern="[0-9/]*" inputmode="numeric"/>
-          <div class="dt-spacer"></div>
-          <input type="text" class="dt w-t" maxlength="2" placeholder="hh" id="conv-cam-h" pattern="[0-9]*" inputmode="numeric"/>
-          <span class="dt-sep">:</span>
-          <input type="text" class="dt w-t" maxlength="2" placeholder="mm" id="conv-cam-i" pattern="[0-9]*" inputmode="numeric"/>
-          <span class="dt-sep">:</span>
-          <input type="text" class="dt w-t" maxlength="2" placeholder="ss" id="conv-cam-s" pattern="[0-9]*" inputmode="numeric"/>
-        </div>
-        <div class="conv-result">
-          <span style="font-size:12px;color:var(--text2)">Thời gian THỰC TẾ:</span>
-          <span class="conv-val" id="conv-real-val">--/--/---- --:--:--</span>
-          <span class="conv-copy" id="btn-copy-real" style="display:none">Copy</span>
-        </div>
-      </div>
-
       <!-- Convert Real -> Cam -->
       <div class="conv-card">
         <div class="conv-title">Nhập giờ Thực tế xảy ra</div>
@@ -528,7 +518,32 @@ footer{
           <span class="conv-copy" id="btn-copy-cam" style="display:none">Copy</span>
         </div>
       </div>
+
+      <!-- Convert Cam -> Real -->
+      <div class="conv-card">
+        <div class="conv-title">Nhập giờ Camera hiển thị</div>
+        <div class="dt-row" id="conv-card-cam-row">
+          <input type="text" class="dt w-date" maxlength="10" placeholder="DD/MM/YYYY" id="conv-cam-date" pattern="[0-9/]*" inputmode="numeric"/>
+          <div class="dt-spacer"></div>
+          <input type="text" class="dt w-t" maxlength="2" placeholder="hh" id="conv-cam-h" pattern="[0-9]*" inputmode="numeric"/>
+          <span class="dt-sep">:</span>
+          <input type="text" class="dt w-t" maxlength="2" placeholder="mm" id="conv-cam-i" pattern="[0-9]*" inputmode="numeric"/>
+          <span class="dt-sep">:</span>
+          <input type="text" class="dt w-t" maxlength="2" placeholder="ss" id="conv-cam-s" pattern="[0-9]*" inputmode="numeric"/>
+        </div>
+        <div class="conv-result">
+          <span style="font-size:12px;color:var(--text2)">Thời gian THỰC TẾ:</span>
+          <span class="conv-val" id="conv-real-val">--/--/---- --:--:--</span>
+          <span class="conv-copy" id="btn-copy-real" style="display:none">Copy</span>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <!-- Nút Hành động -->
+  <div class="btn-row" style="justify-content: center; margin-bottom: 20px;">
+    <button class="btn btn-primary" id="btn-save-log">Lưu nhật ký</button>
+    <button class="btn btn-ghost" id="btn-reset-inputs">Đặt lại</button>
   </div>
 
   <!-- Card 3: Nhật ký -->
