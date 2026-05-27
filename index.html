@@ -1070,6 +1070,12 @@ document.getElementById('btn-export-csv').addEventListener('click', () => {
   link.click();
   document.body.removeChild(link);
 });
+
+// Auto-populate current date/time on load for the first 2 rows only
+const initNow = new Date();
+fillInputsFromDate(initNow, elRealDate, elRealH, elRealI, elRealS);
+fillInputsFromDate(initNow, elCamDate, elCamH, elCamI, elCamS);
+calculateOffset();
 </script>
 </body>
 </html>
