@@ -793,6 +793,7 @@ function fillInputsFromDate(date, d, m, y, h, i, s) {
 document.getElementById('btn-fill-real-now').addEventListener('click', () => {
   const now = new Date();
   fillInputsFromDate(now, elRealD, elRealM, elRealY, elRealH, elRealI, elRealS);
+  fillInputsFromDate(now, elCamD, elCamM, elCamY, elCamH, elCamI, elCamS);
   calculateOffset();
 });
 
