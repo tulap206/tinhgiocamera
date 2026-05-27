@@ -173,7 +173,7 @@ input.name-input:focus{
     padding: 7px 0 !important;
   }
   input.dt.w-date{width:90px !important}
-  input.dt.w-t{width:30px !important}
+  input.dt.w-time{width:75px !important}
   .dt-sep {
     font-size: 11px;
   }
@@ -216,7 +216,7 @@ input.dt:focus{
   box-shadow:0 0 0 3px rgba(0,113,227,0.12);
 }
 input.dt.w-date{width:110px}
-input.dt.w-t{width:38px}
+input.dt.w-time{width:90px}
 
 /* Divider */
 .divider{height:1px;background:var(--border);margin:20px 0}
@@ -455,11 +455,7 @@ footer{
         <div class="dt-row" id="real-time-row">
           <input type="text" class="dt w-date" maxlength="10" placeholder="DD/MM/YYYY" id="real-date" pattern="[0-9/]*" inputmode="numeric"/>
           <div class="dt-spacer"></div>
-          <input type="text" class="dt w-t" maxlength="2" placeholder="hh" id="real-h" pattern="[0-9]*" inputmode="numeric"/>
-          <span class="dt-sep">:</span>
-          <input type="text" class="dt w-t" maxlength="2" placeholder="mm" id="real-i" pattern="[0-9]*" inputmode="numeric"/>
-          <span class="dt-sep">:</span>
-          <input type="text" class="dt w-t" maxlength="2" placeholder="ss" id="real-s" pattern="[0-9]*" inputmode="numeric"/>
+          <input type="text" class="dt w-time" maxlength="8" placeholder="hh:mm:ss" id="real-time" pattern="[0-9:]*" inputmode="numeric"/>
         </div>
       </div>
 
@@ -470,11 +466,7 @@ footer{
         <div class="dt-row" id="cam-time-row">
           <input type="text" class="dt w-date" maxlength="10" placeholder="DD/MM/YYYY" id="cam-date" pattern="[0-9/]*" inputmode="numeric"/>
           <div class="dt-spacer"></div>
-          <input type="text" class="dt w-t" maxlength="2" placeholder="hh" id="cam-h" pattern="[0-9]*" inputmode="numeric"/>
-          <span class="dt-sep">:</span>
-          <input type="text" class="dt w-t" maxlength="2" placeholder="mm" id="cam-i" pattern="[0-9]*" inputmode="numeric"/>
-          <span class="dt-sep">:</span>
-          <input type="text" class="dt w-t" maxlength="2" placeholder="ss" id="cam-s" pattern="[0-9]*" inputmode="numeric"/>
+          <input type="text" class="dt w-time" maxlength="8" placeholder="hh:mm:ss" id="cam-time" pattern="[0-9:]*" inputmode="numeric"/>
         </div>
       </div>
     </div>
@@ -506,11 +498,7 @@ footer{
         <div class="dt-row" id="conv-card-real-row">
           <input type="text" class="dt w-date" maxlength="10" placeholder="DD/MM/YYYY" id="conv-real-date" pattern="[0-9/]*" inputmode="numeric"/>
           <div class="dt-spacer"></div>
-          <input type="text" class="dt w-t" maxlength="2" placeholder="hh" id="conv-real-h" pattern="[0-9]*" inputmode="numeric"/>
-          <span class="dt-sep">:</span>
-          <input type="text" class="dt w-t" maxlength="2" placeholder="mm" id="conv-real-i" pattern="[0-9]*" inputmode="numeric"/>
-          <span class="dt-sep">:</span>
-          <input type="text" class="dt w-t" maxlength="2" placeholder="ss" id="conv-real-s" pattern="[0-9]*" inputmode="numeric"/>
+          <input type="text" class="dt w-time" maxlength="8" placeholder="hh:mm:ss" id="conv-real-time" pattern="[0-9:]*" inputmode="numeric"/>
         </div>
         <div class="conv-result">
           <span style="font-size:12px;color:var(--text2)">Thời gian CAMERA:</span>
@@ -525,11 +513,7 @@ footer{
         <div class="dt-row" id="conv-card-cam-row">
           <input type="text" class="dt w-date" maxlength="10" placeholder="DD/MM/YYYY" id="conv-cam-date" pattern="[0-9/]*" inputmode="numeric"/>
           <div class="dt-spacer"></div>
-          <input type="text" class="dt w-t" maxlength="2" placeholder="hh" id="conv-cam-h" pattern="[0-9]*" inputmode="numeric"/>
-          <span class="dt-sep">:</span>
-          <input type="text" class="dt w-t" maxlength="2" placeholder="mm" id="conv-cam-i" pattern="[0-9]*" inputmode="numeric"/>
-          <span class="dt-sep">:</span>
-          <input type="text" class="dt w-t" maxlength="2" placeholder="ss" id="conv-cam-s" pattern="[0-9]*" inputmode="numeric"/>
+          <input type="text" class="dt w-time" maxlength="8" placeholder="hh:mm:ss" id="conv-cam-time" pattern="[0-9:]*" inputmode="numeric"/>
         </div>
         <div class="conv-result">
           <span style="font-size:12px;color:var(--text2)">Thời gian THỰC TẾ:</span>
@@ -574,14 +558,10 @@ let logs = [];
 
 // DOM Elements
 const elRealDate = document.getElementById('real-date');
-const elRealH = document.getElementById('real-h');
-const elRealI = document.getElementById('real-i');
-const elRealS = document.getElementById('real-s');
+const elRealTime = document.getElementById('real-time');
 
 const elCamDate = document.getElementById('cam-date');
-const elCamH = document.getElementById('cam-h');
-const elCamI = document.getElementById('cam-i');
-const elCamS = document.getElementById('cam-s');
+const elCamTime = document.getElementById('cam-time');
 
 const elNameInput = document.getElementById('cam-name-input');
 const elStatusPill = document.getElementById('status-pill');
@@ -590,16 +570,12 @@ const elResultOffset = document.getElementById('result-offset');
 
 // Converter elements
 const elConvCamDate = document.getElementById('conv-cam-date');
-const elConvCamH = document.getElementById('conv-cam-h');
-const elConvCamI = document.getElementById('conv-cam-i');
-const elConvCamS = document.getElementById('conv-cam-s');
+const elConvCamTime = document.getElementById('conv-cam-time');
 const elConvRealVal = document.getElementById('conv-real-val');
 const elBtnCopyReal = document.getElementById('btn-copy-real');
 
 const elConvRealDate = document.getElementById('conv-real-date');
-const elConvRealH = document.getElementById('conv-real-h');
-const elConvRealI = document.getElementById('conv-real-i');
-const elConvRealS = document.getElementById('conv-real-s');
+const elConvRealTime = document.getElementById('conv-real-time');
 const elConvCamVal = document.getElementById('conv-cam-val');
 const elBtnCopyCam = document.getElementById('btn-copy-cam');
 
@@ -632,52 +608,45 @@ function setupDateInputFormatting(input, nextInput) {
   });
 }
 
+function setupTimeInputFormatting(input) {
+  input.addEventListener('input', (e) => {
+    let val = input.value.replace(/[^0-9]/g, '');
+    if (val.length > 4) {
+      val = val.slice(0, 2) + ':' + val.slice(2, 4) + ':' + val.slice(4, 6);
+    } else if (val.length > 2) {
+      val = val.slice(0, 2) + ':' + val.slice(2);
+    }
+    input.value = val;
+  });
+}
+
 // Auto focus behavior for datetime inputs
 function setupAutoFocus(containerId) {
   const container = document.getElementById(containerId);
   const dateInput = container.querySelector('input.w-date');
-  const inputs = Array.from(container.querySelectorAll('input.dt'));
-  // inputs is [dateInput, hourInput, minuteInput, secondInput]
+  const timeInput = container.querySelector('input.w-time');
   
-  setupDateInputFormatting(dateInput, inputs[1]);
+  setupDateInputFormatting(dateInput, timeInput);
+  setupTimeInputFormatting(timeInput);
 
-  inputs.forEach((input, index) => {
-    if (input === dateInput) {
-      input.addEventListener('input', () => {
-        calculateOffset();
-      });
-      input.addEventListener('blur', () => {
-        calculateOffset();
-      });
-      return;
+  timeInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Backspace' && timeInput.value.length === 0) {
+      dateInput.focus();
+      dateInput.select();
     }
+  });
 
-    input.addEventListener('input', (e) => {
-      const val = input.value.replace(/[^0-9]/g, '');
-      input.value = val;
-      const maxLength = parseInt(input.getAttribute('maxlength'), 10);
-      if (val.length >= maxLength) {
-        if (index < inputs.length - 1) {
-          inputs[index + 1].focus();
-          inputs[index + 1].select();
-        }
-      }
+  [dateInput, timeInput].forEach(input => {
+    input.addEventListener('input', () => {
       calculateOffset();
     });
-
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Backspace' && input.value.length === 0) {
-        inputs[index - 1].focus();
-        if (index - 1 === 0) {
-          inputs[0].select();
-        }
-      }
-    });
-
     input.addEventListener('blur', () => {
-      if (input.value.length > 0) {
-        const maxLength = parseInt(input.getAttribute('maxlength'), 10);
-        input.value = input.value.padStart(maxLength, '0');
+      if (input === timeInput && input.value.length > 0) {
+        const parts = input.value.split(':');
+        const hh = (parts[0] || '0').padStart(2, '0');
+        const mm = (parts[1] || '0').padStart(2, '0');
+        const ss = (parts[2] || '0').padStart(2, '0');
+        input.value = `${hh}:${mm}:${ss}`;
       }
       calculateOffset();
     });
@@ -687,7 +656,7 @@ function setupAutoFocus(containerId) {
   dateInput.addEventListener('paste', (e) => {
     e.preventDefault();
     const pasteText = (e.clipboardData || window.clipboardData).getData('text');
-    parseAndFill(pasteText, inputs);
+    parseAndFill(pasteText, dateInput, timeInput);
     calculateOffset();
   });
 }
@@ -699,47 +668,29 @@ setupAutoFocus('cam-time-row');
 function setupConverterFocus(containerId, callback) {
   const container = document.getElementById(containerId);
   const dateInput = container.querySelector('input.w-date');
-  const inputs = Array.from(container.querySelectorAll('input.dt'));
+  const timeInput = container.querySelector('input.w-time');
   
-  setupDateInputFormatting(dateInput, inputs[1]);
+  setupDateInputFormatting(dateInput, timeInput);
+  setupTimeInputFormatting(timeInput);
 
-  inputs.forEach((input, index) => {
-    if (input === dateInput) {
-      input.addEventListener('input', () => {
-        callback();
-      });
-      input.addEventListener('blur', () => {
-        callback();
-      });
-      return;
+  timeInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Backspace' && timeInput.value.length === 0) {
+      dateInput.focus();
+      dateInput.select();
     }
+  });
 
-    input.addEventListener('input', (e) => {
-      const val = input.value.replace(/[^0-9]/g, '');
-      input.value = val;
-      const maxLength = parseInt(input.getAttribute('maxlength'), 10);
-      if (val.length >= maxLength) {
-        if (index < inputs.length - 1) {
-          inputs[index + 1].focus();
-          inputs[index + 1].select();
-        }
-      }
+  [dateInput, timeInput].forEach(input => {
+    input.addEventListener('input', () => {
       callback();
     });
-
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Backspace' && input.value.length === 0) {
-        inputs[index - 1].focus();
-        if (index - 1 === 0) {
-          inputs[0].select();
-        }
-      }
-    });
-
     input.addEventListener('blur', () => {
-      if (input.value.length > 0) {
-        const maxLength = parseInt(input.getAttribute('maxlength'), 10);
-        input.value = input.value.padStart(maxLength, '0');
+      if (input === timeInput && input.value.length > 0) {
+        const parts = input.value.split(':');
+        const hh = (parts[0] || '0').padStart(2, '0');
+        const mm = (parts[1] || '0').padStart(2, '0');
+        const ss = (parts[2] || '0').padStart(2, '0');
+        input.value = `${hh}:${mm}:${ss}`;
       }
       callback();
     });
@@ -749,7 +700,7 @@ function setupConverterFocus(containerId, callback) {
   dateInput.addEventListener('paste', (e) => {
     e.preventDefault();
     const pasteText = (e.clipboardData || window.clipboardData).getData('text');
-    parseAndFill(pasteText, inputs);
+    parseAndFill(pasteText, dateInput, timeInput);
     callback();
   });
 }
@@ -758,7 +709,7 @@ setupConverterFocus('conv-card-cam-row', convertCamToReal);
 setupConverterFocus('conv-card-real-row', convertRealToCam);
 
 // Parse date-time string and distribute into inputs
-function parseAndFill(text, inputs) {
+function parseAndFill(text, dateEl, timeEl) {
   const nums = text.match(/\d+/g);
   if (!nums) return;
 
@@ -768,34 +719,38 @@ function parseAndFill(text, inputs) {
     let yyyy = nums[2];
     if (yyyy.length === 2) yyyy = '20' + yyyy;
     yyyy = yyyy.padStart(4, '0');
-    inputs[0].value = `${dd}/${mm}/${yyyy}`;
+    dateEl.value = `${dd}/${mm}/${yyyy}`;
   } else if (nums.length === 1 && nums[0].length === 8) {
     const s = nums[0];
-    inputs[0].value = `${s.slice(0,2)}/${s.slice(2,4)}/${s.slice(4,8)}`;
+    dateEl.value = `${s.slice(0,2)}/${s.slice(2,4)}/${s.slice(4,8)}`;
   }
 
   if (nums.length >= 6) {
-    inputs[1].value = nums[3].padStart(2, '0');
-    inputs[2].value = nums[4].padStart(2, '0');
-    inputs[3].value = nums[5].padStart(2, '0');
+    const hh = nums[3].padStart(2, '0');
+    const mm = nums[4].padStart(2, '0');
+    const ss = nums[5].padStart(2, '0');
+    timeEl.value = `${hh}:${mm}:${ss}`;
   } else if (nums.length >= 5) {
-    inputs[1].value = nums[3].padStart(2, '0');
-    inputs[2].value = nums[4].padStart(2, '0');
-    inputs[3].value = '00';
+    const hh = nums[3].padStart(2, '0');
+    const mm = nums[4].padStart(2, '0');
+    timeEl.value = `${hh}:${mm}:00`;
   }
 }
 
 // Convert DD/MM/YYYY hh:mm:ss inputs into Date object
-function getDateFromInputs(dateEl, hEl, iEl, sEl) {
+function getDateFromInputs(dateEl, timeEl) {
   const dateStr = dateEl.value.trim();
-  const parts = dateStr.split('/');
-  if (parts.length !== 3) return null;
-  const day = parseInt(parts[0], 10);
-  const month = parseInt(parts[1], 10) - 1;
-  const year = parseInt(parts[2], 10);
-  const hour = parseInt(hEl.value, 10) || 0;
-  const minute = parseInt(iEl.value, 10) || 0;
-  const second = parseInt(sEl.value, 10) || 0;
+  const dateParts = dateStr.split('/');
+  if (dateParts.length !== 3) return null;
+  const day = parseInt(dateParts[0], 10);
+  const month = parseInt(dateParts[1], 10) - 1;
+  const year = parseInt(dateParts[2], 10);
+
+  const timeStr = timeEl.value.trim();
+  const timeParts = timeStr.split(':');
+  const hour = parseInt(timeParts[0], 10) || 0;
+  const minute = parseInt(timeParts[1], 10) || 0;
+  const second = parseInt(timeParts[2], 10) || 0;
 
   if (!day || month === undefined || !year) return null;
   
@@ -819,28 +774,30 @@ function formatDate(date) {
 }
 
 // Populate input fields with a Date object
-function fillInputsFromDate(date, dateEl, hEl, iEl, sEl) {
+function fillInputsFromDate(date, dateEl, timeEl) {
   if (!date) return;
   const dd = String(date.getDate()).padStart(2, '0');
   const mm = String(date.getMonth() + 1).padStart(2, '0');
   const yyyy = date.getFullYear();
   dateEl.value = `${dd}/${mm}/${yyyy}`;
-  hEl.value = String(date.getHours()).padStart(2, '0');
-  iEl.value = String(date.getMinutes()).padStart(2, '0');
-  sEl.value = String(date.getSeconds()).padStart(2, '0');
+
+  const hh = String(date.getHours()).padStart(2, '0');
+  const ii = String(date.getMinutes()).padStart(2, '0');
+  const ss = String(date.getSeconds()).padStart(2, '0');
+  timeEl.value = `${hh}:${ii}:${ss}`;
 }
 
 // Fill Current Real Time
 document.getElementById('btn-fill-real-now').addEventListener('click', () => {
   const now = new Date();
-  fillInputsFromDate(now, elRealDate, elRealH, elRealI, elRealS);
-  fillInputsFromDate(now, elCamDate, elCamH, elCamI, elCamS);
+  fillInputsFromDate(now, elRealDate, elRealTime);
+  fillInputsFromDate(now, elCamDate, elCamTime);
   calculateOffset();
 });
 
 function calculateOffset() {
-  const realDate = getDateFromInputs(elRealDate, elRealH, elRealI, elRealS);
-  const camDate = getDateFromInputs(elCamDate, elCamH, elCamI, elCamS);
+  const realDate = getDateFromInputs(elRealDate, elRealTime);
+  const camDate = getDateFromInputs(elCamDate, elCamTime);
 
   if (!realDate || !camDate) {
     elStatusPill.className = 'status-pill';
@@ -896,7 +853,7 @@ function formatDurationFriendly(totalSeconds) {
 }
 
 function convertCamToReal() {
-  const camDate = getDateFromInputs(elConvCamDate, elConvCamH, elConvCamI, elConvCamS);
+  const camDate = getDateFromInputs(elConvCamDate, elConvCamTime);
   if (!camDate) {
     elConvRealVal.textContent = '--/--/---- --:--:--';
     elBtnCopyReal.style.display = 'none';
@@ -909,7 +866,7 @@ function convertCamToReal() {
 }
 
 function convertRealToCam() {
-  const realDate = getDateFromInputs(elConvRealDate, elConvRealH, elConvRealI, elConvRealS);
+  const realDate = getDateFromInputs(elConvRealDate, elConvRealTime);
   if (!realDate) {
     elConvCamVal.textContent = '--/--/---- --:--:--';
     elBtnCopyCam.style.display = 'none';
@@ -951,8 +908,8 @@ document.getElementById('btn-reset-inputs').addEventListener('click', () => {
 
 document.getElementById('btn-save-log').addEventListener('click', () => {
   const camName = elNameInput.value.trim() || 'Camera không tên';
-  const realDate = getDateFromInputs(elRealDate, elRealH, elRealI, elRealS);
-  const camDate = getDateFromInputs(elCamDate, elCamH, elCamI, elCamS);
+  const realDate = getDateFromInputs(elRealDate, elRealTime);
+  const camDate = getDateFromInputs(elCamDate, elCamTime);
 
   if (!realDate || !camDate) {
     alert('Vui lòng nhập đầy đủ và chính xác thông tin thời gian trước khi lưu!');
@@ -1088,8 +1045,8 @@ document.getElementById('btn-export-csv').addEventListener('click', () => {
 
 // Auto-populate current date/time on load for the first 2 rows only
 const initNow = new Date();
-fillInputsFromDate(initNow, elRealDate, elRealH, elRealI, elRealS);
-fillInputsFromDate(initNow, elCamDate, elCamH, elCamI, elCamS);
+fillInputsFromDate(initNow, elRealDate, elRealTime);
+fillInputsFromDate(initNow, elCamDate, elCamTime);
 calculateOffset();
 </script>
 </body>
