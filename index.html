@@ -159,14 +159,25 @@ input.name-input:focus{
     margin-bottom: 12px;
   }
   .dt-row {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px 4px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 2px;
   }
   .dt-spacer {
-    width: 100%;
-    height: 0;
-    margin: 2px 0;
+    width: 6px;
+    height: auto;
+    margin: 0;
+  }
+  input.dt {
+    font-size: 12px !important;
+    padding: 7px 0 !important;
+  }
+  input.dt.w-d{width:34px !important}
+  input.dt.w-m{width:30px !important}
+  input.dt.w-y{width:46px !important}
+  input.dt.w-t{width:30px !important}
+  .dt-sep {
+    font-size: 11px;
   }
   .btn-row {
     flex-direction: column;
@@ -177,9 +188,10 @@ input.name-input:focus{
     text-align: center;
   }
   .header {
-    flex-direction: column;
-    text-align: center;
-    gap: 10px;
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+    gap: 14px;
     margin-bottom: 24px;
   }
 }
@@ -1054,6 +1066,14 @@ document.getElementById('btn-export-csv').addEventListener('click', () => {
   link.click();
   document.body.removeChild(link);
 });
+
+// Auto-populate current date/time on load
+const initNow = new Date();
+fillInputsFromDate(initNow, elRealD, elRealM, elRealY, elRealH, elRealI, elRealS);
+fillInputsFromDate(initNow, elCamD, elCamM, elCamY, elCamH, elCamI, elCamS);
+fillInputsFromDate(initNow, elConvCamD, elConvCamM, elConvCamY, elConvCamH, elConvCamI, elConvCamS);
+fillInputsFromDate(initNow, elConvRealD, elConvRealM, elConvRealY, elConvRealH, elConvRealI, elConvRealS);
+calculateOffset();
 </script>
 </body>
 </html>
