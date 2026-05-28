@@ -921,12 +921,22 @@ document.getElementById('btn-save-log').addEventListener('click', () => {
     return;
   }
 
+  const convRealInput = getDateFromInputs(elConvRealDate, elConvRealTime);
+  const convRealOutput = convRealInput ? elConvCamVal.textContent : '';
+
+  const convCamInput = getDateFromInputs(elConvCamDate, elConvCamTime);
+  const convCamOutput = convCamInput ? elConvRealVal.textContent : '';
+
   const log = {
     id: Date.now(),
     name: camName,
     realTime: formatDate(realDate),
     camTime: formatDate(camDate),
-    offset: globalOffsetSeconds
+    offset: globalOffsetSeconds,
+    convRealInput: convRealInput ? formatDate(convRealInput) : '',
+    convRealOutput: convRealOutput,
+    convCamInput: convCamInput ? formatDate(convCamInput) : '',
+    convCamOutput: convCamOutput
   };
 
   logs.unshift(log);
@@ -992,6 +1002,18 @@ function renderLogs() {
 
     const durationText = formatDurationFriendly(absOffset);
 
+    let conversionDetails = '';
+    if (log.convRealInput || log.convCamInput) {
+      if (log.convRealInput) {
+        conversionDetails += `• Quy đổi Thực tế ➔ Camera: Thực tế <b>${log.convRealInput}</b> ➔ Camera <b style="color:var(--red)">${log.convRealOutput}</b><br/>`;
+      }
+      if (log.convCamInput) {
+        conversionDetails += `• Quy đổi Camera ➔ Thực tế: Camera <b>${log.convCamInput}</b> ➔ Thực tế <b style="color:var(--accent)">${log.convCamOutput}</b><br/>`;
+      }
+    } else {
+      conversionDetails += `• Quy đổi nhanh: Thực tế <b>${log.realTime}</b> ➔ Camera <b style="color:var(--red)">${log.camTime}</b> (hoặc ngược lại)`;
+    }
+
     item.innerHTML = `
       <div class="log-item-head">
         <span class="log-cam-name">${escapeHtml(log.name)}</span>
@@ -1000,9 +1022,7 @@ function renderLogs() {
       <div class="log-item-detail">
         • Thời điểm đối so sánh: Thực tế <b>${log.realTime}</b> vs Camera <b>${log.camTime}</b><br/>
         • Độ lệch: <b>${offsetSign}${formatDurationHHMMSS(absOffset)}</b><br/>
-        • Công thức quy đổi nhanh:<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;- Thực tế = Camera ${log.offset > 0 ? '-' : '+'} ${durationText}<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;- Camera = Thực tế ${log.offset > 0 ? '+' : '-'} ${durationText}
+        ${conversionDetails}
       </div>
       <button class="log-delete-btn" onclick="deleteLog(${log.id})" title="Xóa">&times;</button>
     `;
